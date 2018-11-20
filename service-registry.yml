@@ -26,33 +26,11 @@ paths:
           description: The auth token
           type: string
           required: true
-        - name: name
+        - name: query
           in: query
-          description: A keyword to search in the field of `name` from service nodes.
+          description: A keyword to search in the fields of service nodes.
           type: string
           required: false
-        - name: alias
-          in: query
-          description: A keyword to search in the field of `aliases` from service nodes.
-          type: string
-          required: false
-        - name: description
-          in: query
-          description: A keyword to search in the field of `description` from service nodes.
-          type: string
-          required: false
-        - name: metadata
-          in: query
-          description: >-
-            Query service nodes by specifying a list of <key, value> pairs AS STRING type,
-            to match against the meta_date field of the service nodes.
-            NOTE: as for now, OpenAPI does not support object as query parameter properly, this is a work-around solution until it support it!
-          type: array
-          required: false
-          collectionFormat: pipes
-          items:
-            type: string
-            x-example: {"key":"category", "value": "cancer"}
         - name: page_token
           in: query
           description: Page token to identify the record to start retrieval from.
