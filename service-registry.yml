@@ -8,7 +8,7 @@ info:
     name: OICR
   license:
     name: GA4GH Service Registry
-basePath: /ga4gh/registry/v1
+basePath: /api/v1
 paths:
   /services:
     get:
@@ -45,7 +45,9 @@ paths:
         '200':
           description: Return service nodes details.
           schema:
-            $ref: '#/definitions/ServicesResponse'
+            type: array
+            items:
+              $ref: '#/definitions/Service'
         '400':
           description: >-
             Indicates that the server could not understand the request. This is
@@ -99,7 +101,7 @@ paths:
         '201':
           description: Return the newly created service node details.
           schema:
-            $ref: '#/definitions/ServiceResponse'
+            $ref: '#/definitions/Service'
         '400':
           description: >-
             Indicates that the server could not understand the request. This is
@@ -153,7 +155,7 @@ paths:
         '200':
           description: Return service nodes details.
           schema:
-            $ref: '#/definitions/ServiceResponse'
+            $ref: '#/definitions/Service'
         '400':
           description: >-
             Indicates that the server could not understand the request. This is
@@ -216,7 +218,7 @@ paths:
         '200':
           description: Return the newly updated service node details.
           schema:
-            $ref: '#/definitions/ServiceResponse'
+            $ref: '#/definitions/Service'
         '400':
           description: >-
             Indicates that the server could not understand the request. This is
@@ -270,10 +272,8 @@ paths:
           type: string
           required: true
       responses:
-        '200':
-          description: Return the deleted service node details.
-          schema:
-            $ref: '#/definitions/ServiceResponse'
+        '204':
+          description: Indicates success
         '400':
           description: >-
             Indicates that the server could not understand the request. This is
@@ -306,233 +306,7 @@ paths:
           description: Internal Server Error.
           schema:
             $ref: '#/definitions/ErrorDataResponse'
-  /dataobjects:
-    get:
-      tags:
-        - Retrieve GA4GH DOS object list
-      summary: Retrieve a list of GA4GH DOS objects by searching all the services eligible
-      description: >-
-        Provide a collection of GA4GH DOS objects by searching all the services eligible.
-      operationId: get_dataobjects
-      produces:
-        - application/json
-      parameters:
-        - name: Authorization
-          in: header
-          description: The auth token
-          type: string
-          required: false
-        - name: service_ids
-          in: query
-          description: query Data Objects by specifying a list of comma separated service_ids
-          type: array
-          required: false
-          collectionFormat: csv
-          items:
-            type: string
-        - name: dos_ids
-          in: query
-          description: >-
-            query Data Objects by specifying a list of comma separated dos_ids
-            NOTE: currently not supported in the dos-schema api
-          type: array
-          required: false
-          collectionFormat: csv
-          items:
-            type: string
-        - name: node_name
-          in: query
-          description: A keyword to search in the field of `name` from service node.
-          type: string
-          required: false
-        - name: dos_name
-          in: query
-          description: >-
-            If provided will only return Data Objects with the given `name`.
-            NOTE: currently not supported in the dos-schema api
-          type: string
-          required: false
-        - name: dos_version
-          in: query
-          description: >-
-            If provided will only return Data Objects with the given `version`.
-            NOTE: currently not supported in the dos-schema api
-          type: string
-          required: false
-        - name: dos_mime_type
-          in: query
-          description: >-
-            If provided will only return Data Objects with the given `mime_type`.
-            NOTE: currently not supported in the dos-schema api
-          type: string
-          required: false
-        - name: node_description
-          in: query
-          description: >-
-            A keyword to search in the field of `description` from service node.
-          type: string
-          required: false
-        - name: dos_description
-          in: query
-          description: >-
-            A keyword to search in the field of `description` from Data Object.
-            NOTE: currently not supported in the dos-schema api
-          type: string
-          required: false
-        - name: node_alias
-          in: query
-          description: A keyword to search in the field of `aliases` from service node.
-          type: string
-          required: false
-        - name: node_metadata
-          in: query
-          description: >-
-            Query service nodes by specifying a list of <key, value> pairs AS STRING type,
-            to match against the meta_date field of the service nodes.
-            NOTE: as for now, OpenAPI does not support object as query parameter properly, this is a work-around solution until it support it!
-          type: array
-          required: false
-          collectionFormat: pipes
-          items:
-            type: string
-            x-example: {"key":"category", "value": "cancer"}
-        - name: dos_alias
-          in: query
-          description: >-
-            If provided will only return Data Objects with the given alias.
-          type: string
-          required: false
-        - name: dos_url
-          in: query
-          description: >-
-            If provided will return only Data Objects with a that URL matches
-            this string.
-          type: string
-          required: false
-        - name: dos_checksum
-          in: query
-          description: >-
-            The hexlified checksum in Data Object that one would like to match on.
-          type: string
-          required: false
-        - name: dos_date_created_from
-          in: query
-          description: >-
-            query data objects by specific creation date range lower bound
-            NOTE: currently not supported in the dos-schema api
-          type: string
-          format: date-time
-          required: false
-        - name: dos_date_created_to
-          in: query
-          description: >-
-            query data objects by specific creation date range upper bound
-            NOTE: currently not supported in the dos-schema api
-          type: string
-          format: date-time
-          required: false
-        - name: dos_date_updated_from
-          in: query
-          description: >-
-            query data objects by specific updated date range lower bound
-            NOTE: currently not supported in the dos-schema api
-          type: string
-          format: date-time
-          required: false
-        - name: dos_date_updated_to
-          in: query
-          description: >-
-            query data objects by specific updated date range upper bound
-            NOTE: currently not supported in the dos-schema api
-          type: string
-          format: date-time
-          required: false
-        - name: page_token
-          in: query
-          description: >-
-            The continuation token, which is used to page through large result sets.
-            To get the next page of results, set this parameter to the value of
-            `next_page_token` from the previous response.
-          type: string
-          required: false
-        - name: page_size
-          in: query
-          description: >-
-            Specifies the maximum number of results to return in a single page.
-            If unspecified, a system default will be used.
-          type: integer
-          required: false
-      responses:
-        '200':
-          description: Return Ga4gh DOS object list.
-          schema:
-            $ref: '#/definitions/Ga4ghDataObjectsResponse'
-        '400':
-          description: >-
-            Indicates that the server could not understand the request. This is
-            not the same as 422 which indicates a validation error.
-          schema:
-            $ref: '#/definitions/ErrorDataResponse'
-        '401':
-          description: >-
-            Unauthorized.  This will be returned when no authentication
-            information is provided.
-          schema:
-            $ref: '#/definitions/ErrorDataResponse'
-        '403':
-          description: >-
-            The principal associated with the request does not have sufficient
-            rights to perform this operation on the requested resource.
-          schema:
-            $ref: '#/definitions/ErrorDataResponse'
-        '422':
-          description: >-
-            The request was syntactically correct but was not semantically
-            correct. Usually indicating a validation problem.
-          schema:
-            $ref: '#/definitions/ErrorDataResponse'
-        '500':
-          description: Internal Server Error.
-          schema:
-            $ref: '#/definitions/ErrorDataResponse'
 definitions:
-  ServicesResponse:
-    type: object
-    properties:
-      dos_nodes:
-        type: array
-        items:
-          $ref: '#/definitions/Service'
-      next_page_token:
-        description: >-
-          The continuation token, which is used to page through large result sets.
-          To get the next page of results, set this parameter to the value of
-          `next_page_token` from the previous response. This value is
-          left absent when there are no more values to return
-        type: string
-        example: ASDEFSEVTYIKMLI
-  ServiceResponse:
-    type: object
-    properties:
-      dos_node:
-        $ref: '#/definitions/Service'
-  Ga4ghDataObjectsResponse:
-    type: object
-    properties:
-      dos_objects:
-        type: array
-        items:
-          "$ref": "#/definitions/Ga4ghDataObjectOnNode"
-        description: The list of Data Objects.
-      next_page_token:
-        description: >-
-          The continuation token, which is used to page through large result sets.
-          To get the next page of results, set this parameter to the value of
-          `next_page_token` from the previous response. This value is
-          left absent when there are no more values to return
-        type: string
-        example: ASDEFSEVTYIKMLI
-    title: A list of GA4GH data objects
   ServiceCreationRequest:
     type: object
     description: 'The object containing information/metadata for the to-be-created service node.'
@@ -679,144 +453,6 @@ definitions:
     enum:
       - DOS
       - BEACON
-  Ga4ghDataObjectOnNode:
-    type: object
-    title: 'Data Object from a service node: a file, API or other resource'
-    allOf:
-      - $ref: '#/definitions/Ga4ghDataObject'
-      - properties:
-          service_id:
-            type: string
-            description: >-
-              REQUIRED
-              An identifier unique to the service node where this Data Object is from.
-  Ga4ghDataObject:
-    type: object
-    properties:
-      id:
-        type: string
-        description: |-
-          REQUIRED
-          An identifier unique to this Data Object.
-      name:
-        type: string
-        description: |-
-          OPTIONAL
-          A string that can be optionally used to name a Data Object.
-      size:
-        type: string
-        format: int64
-        description: |-
-          REQUIRED
-          The computed size in bytes.
-      created:
-        type: string
-        format: date-time
-        description: |-
-          REQUIRED
-          Timestamp of object creation in RFC3339.
-      updated:
-        type: string
-        format: date-time
-        description: |-
-          OPTIONAL
-          Timestamp of update in RFC3339, identical to create timestamp in systems
-          that do not support updates.
-      version:
-        type: string
-        description: |-
-          OPTIONAL
-          A string representing a version.
-      mime_type:
-        type: string
-        description: |-
-          OPTIONAL
-          A string providing the mime-type of the Data Object.
-          For example, "application/json".
-      checksums:
-        type: array
-        items:
-          $ref: '#/definitions/Checksum'
-        description: |-
-          REQUIRED
-          The checksum of the Data Object. At least one checksum must be provided.
-      urls:
-        type: array
-        items:
-          $ref: '#/definitions/URL'
-        description: |-
-          OPTIONAL
-          The list of URLs that can be used to access the Data Object.
-      description:
-        type: string
-        description: |-
-          OPTIONAL
-          A human readable description of the contents of the Data Object.
-      aliases:
-        type: array
-        items:
-          type: string
-        title: |-
-          OPTIONAL
-          A list of strings that can be used to find this Data Object.
-          These aliases can be used to represent the Data Object's location in
-          a directory (e.g. "bucket/folder/file.name") to make Data Objects
-          more discoverable. They might also be used to represent
-    required:
-      - id
-      - size
-      - created
-      - checksums
-    title: 'Data Object: a file, API or other resource'
-  Checksum:
-    type: object
-    properties:
-      checksum:
-        type: string
-        description: |-
-          REQUIRED
-          The hex-string encoded checksum for the Data.
-      type:
-        type: string
-        description: |-
-          OPTIONAL
-          The digest method used to create the checksum. If left unspecified md5
-          will be assumed.
-
-          possible values:
-          md5                # most blob stores provide a checksum using this
-          multipart-md5      # multipart uploads provide a specialized tag in S3
-          sha256
-          sha512
-    required:
-      - checksum
-  URL:
-    type: object
-    properties:
-      url:
-        type: string
-        description: |-
-          REQUIRED
-          A URL that can be used to access the file.
-      system_metadata:
-        $ref: '#/definitions/SystemMetadata'
-      user_metadata:
-        $ref: '#/definitions/UserMetadata'
-    required:
-      - url
-  SystemMetadata:
-    type: object
-    additionalProperties: true
-    description: |-
-            OPTIONAL
-            These values are reported by the underlying object store.
-            A set of key-value pairs that represent system metadata about the object.
-  UserMetadata:
-    type: object
-    additionalProperties: true
-    description: |-
-            OPTIONAL
-            A set of key-value pairs that represent metadata provided by the uploader.
   Error:
     type: object
     properties:
