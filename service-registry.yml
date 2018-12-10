@@ -10,10 +10,10 @@ info:
     name: GA4GH Service Registry
 basePath: /ga4gh/registry/v1
 paths:
-  /nodes:
+  /services:
     get:
       tags:
-        - Service Node list
+        - services
       summary: Retrieve a list of service nodes (e.g., Beacon node, GA4GH DOS node )
       description: >-
         Provide a collection of service nodes.
@@ -67,7 +67,7 @@ paths:
         '200':
           description: Return service nodes details.
           schema:
-            $ref: '#/definitions/ServiceNodesResponse'
+            $ref: '#/definitions/ServicesResponse'
         '400':
           description: >-
             Indicates that the server could not understand the request. This is
@@ -98,7 +98,7 @@ paths:
             $ref: '#/definitions/ErrorDataResponse'
     post:
       tags:
-        - Create a service node
+        - services
       summary: Create a service node (e.g., Beacon node, GA4GH DOS node etc.)
       description: >-
         Add/Create a service node, owned by the user.
@@ -116,12 +116,12 @@ paths:
           description: 'Service node creation request'
           required: true
           schema:
-            $ref: '#/definitions/ServiceNodeCreationRequest'
+            $ref: '#/definitions/ServiceCreationRequest'
       responses:
         '201':
           description: Return the newly created service node details.
           schema:
-            $ref: '#/definitions/ServiceNodeResponse'
+            $ref: '#/definitions/ServiceResponse'
         '400':
           description: >-
             Indicates that the server could not understand the request. This is
@@ -150,18 +150,18 @@ paths:
           description: Internal Server Error.
           schema:
             $ref: '#/definitions/ErrorDataResponse'
-  /nodes/{node_id}:
+  /services/{service_id}:
     get:
       tags:
-        - Retrieve a service node specified by {node_id}
-      summary: Retrieve the information of the service node specified by {node_id}
+        - services
+      summary: Retrieve the information of the service node specified by {service_id}
       description:
-        Retrieve the information of the service node specified by {node_id}
+        Retrieve the information of the service node specified by {service_id}
       operationId: get_node_by_id
       produces:
         - application/json
       parameters:
-        - name: node_id
+        - name: service_id
           in: path
           type: string
           required: true
@@ -175,7 +175,7 @@ paths:
         '200':
           description: Return service nodes details.
           schema:
-            $ref: '#/definitions/ServiceNodeResponse'
+            $ref: '#/definitions/ServiceResponse'
         '400':
           description: >-
             Indicates that the server could not understand the request. This is
@@ -210,15 +210,15 @@ paths:
             $ref: '#/definitions/ErrorDataResponse'
     put:
       tags:
-        - Update a service node specified by {node_id}
-      summary: Update the service node specified by {node_id}
+        - services
+      summary: Update the service node specified by {service_id}
       description: >-
-        Update the service node specified by {node_id}
+        Update the service node specified by {service_id}
       operationId: update_node
       produces:
         - application/json
       parameters:
-        - name: node_id
+        - name: service_id
           in: path
           type: string
           required: true
@@ -233,12 +233,12 @@ paths:
           description: 'Service node update request'
           required: true
           schema:
-            $ref: '#/definitions/ServiceNodeUpdateRequest'
+            $ref: '#/definitions/ServiceUpdateRequest'
       responses:
         '200':
           description: Return the newly updated service node details.
           schema:
-            $ref: '#/definitions/ServiceNodeResponse'
+            $ref: '#/definitions/ServiceResponse'
         '400':
           description: >-
             Indicates that the server could not understand the request. This is
@@ -273,15 +273,15 @@ paths:
             $ref: '#/definitions/ErrorDataResponse'
     delete:
       tags:
-        - Delete a service node specified by {node_id}
-      summary: Delete the service node specified by {node_id}
+        - services
+      summary: Delete the service node specified by {service_id}
       description: >-
-        Delete the service node specified by {node_id}
+        Delete the service node specified by {service_id}
       operationId: delete_node
       produces:
         - application/json
       parameters:
-        - name: node_id
+        - name: service_id
           in: path
           type: string
           required: true
@@ -295,7 +295,7 @@ paths:
         '200':
           description: Return the deleted service node details.
           schema:
-            $ref: '#/definitions/ServiceNodeResponse'
+            $ref: '#/definitions/ServiceResponse'
         '400':
           description: >-
             Indicates that the server could not understand the request. This is
@@ -344,9 +344,9 @@ paths:
           description: The auth token
           type: string
           required: false
-        - name: node_ids
+        - name: service_ids
           in: query
-          description: query Data Objects by specifying a list of comma separated node_ids
+          description: query Data Objects by specifying a list of comma separated service_ids
           type: array
           required: false
           collectionFormat: csv
@@ -518,13 +518,13 @@ paths:
           schema:
             $ref: '#/definitions/ErrorDataResponse'
 definitions:
-  ServiceNodesResponse:
+  ServicesResponse:
     type: object
     properties:
       dos_nodes:
         type: array
         items:
-          $ref: '#/definitions/ServiceNode'
+          $ref: '#/definitions/Service'
       next_page_token:
         description: >-
           The continuation token, which is used to page through large result sets.
@@ -533,11 +533,11 @@ definitions:
           left absent when there are no more values to return
         type: string
         example: ASDEFSEVTYIKMLI
-  ServiceNodeResponse:
+  ServiceResponse:
     type: object
     properties:
       dos_node:
-        $ref: '#/definitions/ServiceNode'
+        $ref: '#/definitions/Service'
   Ga4ghDataObjectsResponse:
     type: object
     properties:
@@ -555,7 +555,7 @@ definitions:
         type: string
         example: ASDEFSEVTYIKMLI
     title: A list of GA4GH data objects
-  ServiceNodeCreationRequest:
+  ServiceCreationRequest:
     type: object
     description: 'The object containing information/metadata for the to-be-created service node.'
     properties:
@@ -592,10 +592,10 @@ definitions:
           OPTIONAL
           A human readable general description of this service node.
       service_type:
-        $ref: '#/definitions/ServiceNodeTypeEnum'
+        $ref: '#/definitions/ServiceTypeEnum'
     required:
         - url
-  ServiceNodeUpdateRequest:
+  ServiceUpdateRequest:
     type: object
     description: 'The object containing information for the to-be-updated service node.'
     properties:
@@ -622,7 +622,7 @@ definitions:
         description: >-
           OPTIONAL
           A human readable general description of this service node.
-  ServiceNode:
+  Service:
     type: object
     title: >-
       Service Node - a server which serves ga4ghDataObjects (e.g., file, API or other resource)
@@ -689,11 +689,11 @@ definitions:
           A list of strings that can be used to find this service node
           to make it more discoverable.
       service_type:
-        $ref: '#/definitions/ServiceNodeTypeEnum'
+        $ref: '#/definitions/ServiceTypeEnum'
     required:
       - id
       - url
-  ServiceNodeTypeEnum:
+  ServiceTypeEnum:
     type: string
     description: >
       Indicates the type of the service node (e.g. DOS, BEACON etc.).
@@ -707,7 +707,7 @@ definitions:
     allOf:
       - $ref: '#/definitions/Ga4ghDataObject'
       - properties:
-          node_id:
+          service_id:
             type: string
             description: >-
               REQUIRED
