@@ -50,8 +50,7 @@ paths:
               $ref: '#/definitions/Service'
         '400':
           description: >-
-            Indicates that the server could not understand the request. This is
-            not the same as 422 which indicates a validation error.
+            Indicates that the server could not understand the request.
           schema:
             $ref: '#/definitions/Error'
         '401':
@@ -64,12 +63,6 @@ paths:
           description: >-
             The principal associated with the request does not have sufficient
             rights to perform this operation on the requested resource.
-          schema:
-            $ref: '#/definitions/Error'
-        '422':
-          description: >-
-            The request was syntactically correct but was not semantically
-            correct. Usually indicating a validation problem.
           schema:
             $ref: '#/definitions/Error'
         '500':
@@ -104,8 +97,7 @@ paths:
             $ref: '#/definitions/Service'
         '400':
           description: >-
-            Indicates that the server could not understand the request. This is
-            not the same as 422 which indicates a validation error.
+            Indicates that the server could not understand the request.
           schema:
             $ref: '#/definitions/Error'
         '401':
@@ -118,12 +110,6 @@ paths:
           description: >-
             The principal associated with the request does not have sufficient
             rights to perform this operation on the requested resource.
-          schema:
-            $ref: '#/definitions/Error'
-        '422':
-          description: >-
-            The request was syntactically correct but was not semantically
-            correct. Usually indicating a validation problem.
           schema:
             $ref: '#/definitions/Error'
         '500':
@@ -158,8 +144,7 @@ paths:
             $ref: '#/definitions/Service'
         '400':
           description: >-
-            Indicates that the server could not understand the request. This is
-            not the same as 422 which indicates a validation error.
+            Indicates that the server could not understand the request.
           schema:
             $ref: '#/definitions/Error'
         '401':
@@ -176,12 +161,6 @@ paths:
             $ref: '#/definitions/Error'
         '404':
           description: The requested resource was not found.
-          schema:
-            $ref: '#/definitions/Error'
-        '422':
-          description: >-
-            The request was syntactically correct but was not semantically
-            correct. Usually indicating a validation problem.
           schema:
             $ref: '#/definitions/Error'
         '500':
@@ -221,8 +200,7 @@ paths:
             $ref: '#/definitions/Service'
         '400':
           description: >-
-            Indicates that the server could not understand the request. This is
-            not the same as 422 which indicates a validation error.
+            Indicates that the server could not understand the request.
           schema:
             $ref: '#/definitions/Error'
         '401':
@@ -239,12 +217,6 @@ paths:
             $ref: '#/definitions/Error'
         '404':
           description: The requested resource was not found.
-          schema:
-            $ref: '#/definitions/Error'
-        '422':
-          description: >-
-            The request was syntactically correct but was not semantically
-            correct. Usually indicating a validation problem.
           schema:
             $ref: '#/definitions/Error'
         '500':
@@ -276,8 +248,7 @@ paths:
           description: Indicates success
         '400':
           description: >-
-            Indicates that the server could not understand the request. This is
-            not the same as 422 which indicates a validation error.
+            Indicates that the server could not understand the request.
           schema:
             $ref: '#/definitions/Error'
         '401':
@@ -294,12 +265,6 @@ paths:
             $ref: '#/definitions/Error'
         '404':
           description: The requested resource was not found.
-          schema:
-            $ref: '#/definitions/Error'
-        '422':
-          description: >-
-            The request was syntactically correct but was not semantically
-            correct. Usually indicating a validation problem.
           schema:
             $ref: '#/definitions/Error'
         '500':
