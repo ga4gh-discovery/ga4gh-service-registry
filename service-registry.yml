@@ -336,8 +336,8 @@ definitions:
         items:
           type: string
         description: >-
-         OPTIONAL
-         A list of strings that can be used to find this service node to make it more discoverable.
+          OPTIONAL
+          A list of strings that can be used to find this service node to make it more discoverable.
       description:
         type: string
         description: >-
@@ -346,7 +346,7 @@ definitions:
       service_type:
         $ref: '#/definitions/ServiceTypeEnum'
     required:
-        - url
+      - url
   ServiceUpdateRequest:
     type: object
     description: 'The object containing information for the to-be-updated service node.'
@@ -403,30 +403,21 @@ definitions:
           A set of key-value pairs that represent metadata specific to this service node provided by the user
         example:
           data_category: KidsCancer
-      health_status:
-        type: string
-        description: >-
-          OPTIONAL
-          The health status of this service node. The implementation of this field value
-            could be set via periodic `ping` calls to the url of this service node, or could
-            be set via the last query of data objects on this service node.
-        example: UP
+      health:
+        type: object
+        description: The health status of this service.
+        properties:
+          status:
+            type: string
+          updatedAt:
+            type: string
+            format: date-time
       created:
         type: string
         format: date-time
         description: >-
           OPTIONAL
           Timestamp of service node creation/addition in RFC3339.
-      last_health_updated:
-        type: string
-        format: date-time
-        description: >-
-          OPTIONAL
-          Timestamp of the last health check was updated in RFC3339,
-          identical to create timestamp in systems that do not support updates.
-          The implementation of this field value
-            could be set via periodic `ping` calls to the url of this service node, or could
-            be set via the last query of data objects on this service node.
       description:
         type: string
         description: >-
