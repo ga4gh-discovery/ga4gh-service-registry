@@ -53,29 +53,29 @@ paths:
             Indicates that the server could not understand the request. This is
             not the same as 422 which indicates a validation error.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '401':
           description: >-
             Unauthorized.  This will be returned when no authentication
             information is provided.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '403':
           description: >-
             The principal associated with the request does not have sufficient
             rights to perform this operation on the requested resource.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '422':
           description: >-
             The request was syntactically correct but was not semantically
             correct. Usually indicating a validation problem.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '500':
           description: Internal Server Error.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
     post:
       tags:
         - services
@@ -107,29 +107,29 @@ paths:
             Indicates that the server could not understand the request. This is
             not the same as 422 which indicates a validation error.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '401':
           description: >-
             Unauthorized.  This will be returned when no authentication
             information is provided.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '403':
           description: >-
             The principal associated with the request does not have sufficient
             rights to perform this operation on the requested resource.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '422':
           description: >-
             The request was syntactically correct but was not semantically
             correct. Usually indicating a validation problem.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '500':
           description: Internal Server Error.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
   /services/{service_id}:
     get:
       tags:
@@ -161,33 +161,33 @@ paths:
             Indicates that the server could not understand the request. This is
             not the same as 422 which indicates a validation error.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '401':
           description: >-
             Unauthorized.  This will be returned when no authentication
             information is provided.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '403':
           description: >-
             The principal associated with the request does not have sufficient
             rights to perform this operation on the requested resource.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '404':
           description: The requested resource was not found.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '422':
           description: >-
             The request was syntactically correct but was not semantically
             correct. Usually indicating a validation problem.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '500':
           description: Internal Server Error.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
     put:
       tags:
         - services
@@ -224,33 +224,33 @@ paths:
             Indicates that the server could not understand the request. This is
             not the same as 422 which indicates a validation error.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '401':
           description: >-
             Unauthorized.  This will be returned when no authentication
             information is provided.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '403':
           description: >-
             The principal associated with the request does not have sufficient
             rights to perform this operation on the requested resource.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '404':
           description: The requested resource was not found.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '422':
           description: >-
             The request was syntactically correct but was not semantically
             correct. Usually indicating a validation problem.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '500':
           description: Internal Server Error.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
     delete:
       tags:
         - services
@@ -279,33 +279,33 @@ paths:
             Indicates that the server could not understand the request. This is
             not the same as 422 which indicates a validation error.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '401':
           description: >-
             Unauthorized.  This will be returned when no authentication
             information is provided.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '403':
           description: >-
             The principal associated with the request does not have sufficient
             rights to perform this operation on the requested resource.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '404':
           description: The requested resource was not found.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '422':
           description: >-
             The request was syntactically correct but was not semantically
             correct. Usually indicating a validation problem.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
         '500':
           description: Internal Server Error.
           schema:
-            $ref: '#/definitions/ErrorDataResponse'
+            $ref: '#/definitions/Error'
 definitions:
   ServiceCreationRequest:
     type: object
@@ -448,34 +448,28 @@ definitions:
     type: object
     properties:
       code:
-        type: string
-        example: E422CDNPAYRCPTG001
-        description: 'Notification code. For instance, developer could make the first character indicate severity (E,W,F).'
+        type: integer
+        description: HTTP status code
+        example: 400
       message:
         type: string
-        example: Something is invalid
-        description: >-
-          Description of the error or information notification. Where the
-          response is 2xx, it's a notification with informational details about
-          this response.
-      uuid:
-        type: string
-        example: aadde-ddddee-eeeedd-eeeedd
-        description: Unique identifier for this notification
+        description: Description of the error or information.
+        example: Bad request
       timestamp:
         type: string
         format: date-time
-        example: 2017-10-12T20:38:45.408Z
-        description: Timestamp of the notification
-      metadata:
-        type: object
-        additionalProperties:
-          type: object
-        description: Context specific to this area. May not be provided.
-  ErrorDataResponse:
-    type: object
-    properties:
+        description: Timestamp
+        example: '2017-10-12T20:38:45.408Z'
       errors:
         type: array
         items:
-          $ref: '#/definitions/Error'
+          type: object
+          properties:
+            code:
+              type: string
+              description: Code
+              example: IllegalArgumentException
+            message:
+              type: string
+              description: Description of the error or information.
+              example: Argument x must be greater than zero
