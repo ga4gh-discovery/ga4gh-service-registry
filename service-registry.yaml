@@ -271,6 +271,30 @@ paths:
           description: Internal Server Error.
           schema:
             $ref: '#/definitions/Error'
+  /services/types:
+    get:
+      tags:
+        - services
+      summary: List known service types
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: The auth token
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Indicates success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceTypeEnum'
+        '500':
+          description: Internal Server Error.
+          schema:
+            $ref: '#/definitions/Error'
 definitions:
   ServiceCreationRequest:
     type: object
