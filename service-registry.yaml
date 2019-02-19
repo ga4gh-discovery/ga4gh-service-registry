@@ -281,7 +281,7 @@ definitions:
         description: >-
           REQUIRED
           The http/https address of this service node.
-      meta_data:
+      metadata:
         type: object
         additionalProperties:
           type: string
@@ -316,7 +316,7 @@ definitions:
     type: object
     description: 'The object containing information for the to-be-updated service node.'
     properties:
-      meta_data:
+      metadata:
         type: object
         additionalProperties:
           type: string
@@ -359,7 +359,7 @@ definitions:
         description: >-
           REQUIRED
           The url (e.g., http/https address) of this service node.
-      meta_data:
+      metadata:
         type: object
         additionalProperties:
           type: string
