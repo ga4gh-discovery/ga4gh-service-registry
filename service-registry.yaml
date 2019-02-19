@@ -368,15 +368,6 @@ definitions:
           A set of key-value pairs that represent metadata specific to this service node provided by the user
         example:
           data_category: KidsCancer
-      health:
-        type: object
-        description: The health status of this service.
-        properties:
-          status:
-            type: string
-          updatedAt:
-            type: string
-            format: date-time
       created:
         type: string
         format: date-time
