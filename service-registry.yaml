@@ -26,11 +26,6 @@ paths:
           description: The auth token
           type: string
           required: true
-        - name: query
-          in: query
-          description: A keyword to search in the fields of service nodes.
-          type: string
-          required: false
         - name: page_token
           in: query
           description: Page token to identify the record to start retrieval from.
