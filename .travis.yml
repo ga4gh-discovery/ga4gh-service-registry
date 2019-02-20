@@ -23,5 +23,5 @@ script:
   - echo $VALIDATION_OUTPUT
 
   # check if the validation output ignoring warnings is an empty array
-  - VALIDATION_ERROR_COUNT=`echo "$VALIDATION_OUTPUT" |jq -c '.schemaValidationMessages | map(select(.level != "warning"))' |jq length`
+  - VALIDATION_ERROR_COUNT=`echo "$VALIDATION_OUTPUT" |jq -c '.schemaValidationMessages // [] | map(select(.level != "warning"))' |jq length`
   - test "$VALIDATION_ERROR_COUNT" == 0
