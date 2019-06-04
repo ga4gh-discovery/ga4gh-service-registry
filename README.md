@@ -1,10 +1,10 @@
 ![](https://www.ga4gh.org/wp-content/themes/ga4gh-theme/gfx/GA-logo-horizontal-tag-RGB.svg)
 
-# Service Registry API [![Build Status](https://travis-ci.org/ga4gh-discovery/service-registry.svg?branch=develop)](https://travis-ci.org/ga4gh-discovery/service-registry) [![](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/ga4gh-discovery/service-registry/develop/LICENSE)
+# Service Registry API [![Build Status](https://travis-ci.org/ga4gh-discovery/ga4gh-service-registry.svg?branch=develop)](https://travis-ci.org/ga4gh-discovery/ga4gh-ervice-registry) [![](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-registry/develop/LICENSE)
 
 ## How to view
 
-See the swagger editor to view our [schema](https://editor.swagger.io/?url=https://raw.githubusercontent.com/ga4gh-discovery/service-registry/develop/service-registry.yaml).
+See the swagger editor to view our [schema](https://editor.swagger.io/?url=https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-registry/develop/service-registry.yaml).
 
 ## How to test
 
