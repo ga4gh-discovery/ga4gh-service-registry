@@ -65,7 +65,7 @@ paths:
             schema:
               $ref: '#/components/schemas/ServiceRegistrationRequest'
       responses:
-        '200':
+        '201':
           description: Success
           content:
             application/json:
@@ -230,8 +230,7 @@ components:
     ServiceType:
       type: string
       description: Indicates the type of the service.
-      enum:
-        - BEACON
+      example: 'BEACON'
     Service:
       type: object
       description: Web server as a service
@@ -240,17 +239,21 @@ components:
           type: string
           format: uuid
           description: An identifier (UUID) unique to this service.
+          example: '8087d255-1e38-45b6-a5ba-31e2bb50bdd3'
         createdAt:
           type: string
           format: date-time
           description: Timestamp of service creation in RFC 3339.
+          example: '2019-06-04T12:58:19Z'
         updatedAt:
           type: string
           format: date-time
           description: Timestamp of service modification in RFC 3339.
+          example: '2019-06-04T12:58:19Z'
         name:
           type: string
           description: Name of service.
+          example: 'GA4GH Service'
         contactUrl:
           type: string
           description: URL of the contact for the host/maintainer of this service, e.g. a link to a contact form (RFC 3986 format), or an email (RFC 2368 format).
@@ -261,6 +264,7 @@ components:
         url:
           type: string
           description: The url (http/https address) of web server.
+          example: 'https://ga4gh-example-service.com'
         type:
           $ref: '#/components/schemas/ServiceType'
         metadata:
@@ -275,13 +279,15 @@ components:
           items:
             type: string
           description: A list of strings that can be used to tag the service.
+          example: ["staging"]
     ServiceRegistrationRequest:
       type: object
-      description: Web server as a service
+      description: Service to be registered into registry
       properties:
         name:
           type: string
           description: Name of service.
+          example: 'GA4GH Service'
         contactUrl:
           type: string
           description: URL of the contact for the host/maintainer of this service, e.g. a link to a contact form (RFC 3986 format), or an email (RFC 2368 format).
@@ -292,6 +298,7 @@ components:
         url:
           type: string
           description: The url (http/https address) of web server.
+          example: 'https://ga4gh-example-service.com'
         type:
           $ref: '#/components/schemas/ServiceType'
         metadata:
@@ -306,22 +313,24 @@ components:
           items:
             type: string
           description: A list of strings that can be used to tag the service.
+      required:
+        - name
     Error:
       type: object
       properties:
         code:
           type: integer
           description: HTTP status code
-          example: 400
+          example: '400'
         message:
           type: string
           description: Description of the error or information.
-          example: Bad request
+          example: 'Bad request'
         timestamp:
           type: string
           format: date-time
-          description: Timestamp
-          example: '2017-10-12T20:38:45.408Z'
+          description: Timestamp of service modification in RFC 3339.
+          example: '2019-06-04T12:58:19Z'
         errors:
           type: array
           items:
@@ -330,8 +339,8 @@ components:
               code:
                 type: string
                 description: Code
-                example: IllegalArgumentException
+                example: 'IllegalArgumentException'
               message:
                 type: string
                 description: Description of the error or information.
-                example: Argument x must be greater than zero
+                example: 'Argument x must be greater than zero'
