@@ -252,7 +252,7 @@ components:
           example: '2019-06-04T12:58:19Z'
         name:
           type: string
-          description: Name of service.
+          description: Name of service. It is recommended to be unique and unambiguous.
           example: 'GA4GH Service'
         contactUrl:
           type: string
@@ -286,7 +286,7 @@ components:
       properties:
         name:
           type: string
-          description: Name of service.
+          description: Name of service. It is recommended to be unique and unambiguous.
           example: 'GA4GH Service'
         contactUrl:
           type: string
