@@ -288,6 +288,12 @@ components:
           type: string
           description: Name of service.
           example: 'GA4GH Service'
+        url:
+          type: string
+          description: The url (http/https address) of web server.
+          example: 'https://ga4gh-example-service.com'
+        type:
+          $ref: '#/components/schemas/ServiceType'
         contactUrl:
           type: string
           description: URL of the contact for the host/maintainer of this service, e.g. a link to a contact form (RFC 3986 format), or an email (RFC 2368 format).
@@ -295,12 +301,6 @@ components:
         description:
           type: string
           description: A human readable general description of this service.
-        url:
-          type: string
-          description: The url (http/https address) of web server.
-          example: 'https://ga4gh-example-service.com'
-        type:
-          $ref: '#/components/schemas/ServiceType'
         metadata:
           type: object
           additionalProperties:
@@ -315,6 +315,8 @@ components:
           description: A list of strings that can be used to tag the service.
       required:
         - name
+        - url
+        - type
     Error:
       type: object
       properties:
