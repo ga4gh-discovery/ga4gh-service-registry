@@ -22,25 +22,31 @@ paths:
             type: string
         - name: page
           in: query
-          description: Page number.
+          description: Page cursor.
           required: false
           schema:
-            type: integer
-        - name: size
+            type: string
+            example: 'NDMyNzQyODI3OTQw'
+        - name: limit
           in: query
           description: The number of entries to be retrieved.
           required: false
           schema:
             type: integer
+            example: 20
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Service'
+                properties:
+                  content:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Service'
+                  paging:
+                    $ref: '#/components/schemas/Paging'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -133,6 +139,24 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    Paging:
+      type: object
+      properties:
+        previous:
+          type: string
+          example: 'https://ga4gh-example-service.com?before=dXNlcjpVMEc5V0ZYTlo'
+        next:
+          type: string
+          example: 'https://ga4gh-example-service.com?after=NDMyNzQyODI3OTQw'
+        cursors:
+          type: object
+          properties:
+            before:
+              type: string
+              example: 'dXNlcjpVMEc5V0ZYTlo'
+            after:
+              type: string
+              example: 'NDMyNzQyODI3OTQw'
     ServiceType:
       type: string
       description: Indicates the type of the service.
