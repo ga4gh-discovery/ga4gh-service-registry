@@ -47,36 +47,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '500':
           $ref: '#/components/responses/ServerError'
-    post:
-      tags:
-        - services
-      summary: Register service into service registry
-      parameters:
-        - name: authorization
-          in: header
-          description: The auth token
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ServiceRegistrationRequest'
-      responses:
-        '201':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Service'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '500':
-          $ref: '#/components/responses/ServerError'
   /services/types:
     get:
       tags:
@@ -130,70 +100,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Service'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '500':
-          $ref: '#/components/responses/ServerError'
-    put:
-      tags:
-        - services
-      summary: Replace existing service
-      parameters:
-        - name: serviceId
-          in: path
-          description: Service identifier
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: authorization
-          in: header
-          description: The auth token
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ServiceRegistrationRequest'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Service'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '500':
-          $ref: '#/components/responses/ServerError'
-    delete:
-      tags:
-        - services
-      summary: Deregister service specified by UUID from registry
-      parameters:
-        - name: serviceId
-          in: path
-          description: Service identifier
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: authorization
-          in: header
-          description: The auth token
-          required: true
-          schema:
-            type: string
-      responses:
-        '204':
-          description: No Content
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -280,43 +186,6 @@ components:
             type: string
           description: A list of strings that can be used to tag the service.
           example: ["staging"]
-    ServiceRegistrationRequest:
-      type: object
-      description: Service to be registered into registry
-      properties:
-        name:
-          type: string
-          description: Name of service. It is recommended to be unique and unambiguous.
-          example: 'GA4GH Service'
-        url:
-          type: string
-          description: URL of the service (RFC 3986 format).
-          example: 'https://foobar.com'
-        type:
-          $ref: '#/components/schemas/ServiceType'
-        contactUrl:
-          type: string
-          description: URL of the contact for the host/maintainer of this service, e.g. a link to a contact form (RFC 3986 format), or an email (RFC 2368 format).
-          example: 'mailto:support@example.com'
-        description:
-          type: string
-          description: A human readable general description of this service.
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-          description: >-
-            A set of key-value pairs that represent metadata specific to this
-            service.
-        aliases:
-          type: array
-          items:
-            type: string
-          description: A list of strings that can be used to tag the service.
-      required:
-        - name
-        - url
-        - type
     Error:
       type: object
       properties:
