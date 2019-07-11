@@ -17,23 +17,16 @@ paths:
         - name: authorization
           in: header
           description: The auth token
-          required: false
+          required: true
           schema:
             type: string
-        - name: page
+        - name: pageToken
           in: query
-          description: Page cursor.
+          description: Page token.
           required: false
           schema:
             type: string
             example: 'NDMyNzQyODI3OTQw'
-        - name: limit
-          in: query
-          description: The number of entries to be retrieved.
-          required: false
-          schema:
-            type: integer
-            example: 20
       responses:
         '200':
           description: Success
@@ -45,8 +38,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Service'
-                  paging:
-                    $ref: '#/components/schemas/Paging'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -62,7 +55,7 @@ paths:
         - name: authorization
           in: header
           description: The auth token
-          required: false
+          required: true
           schema:
             type: string
       responses:
@@ -96,7 +89,7 @@ paths:
         - name: authorization
           in: header
           description: The auth token
-          required: false
+          required: true
           schema:
             type: string
       responses:
@@ -139,24 +132,17 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    Paging:
+    Pagination:
       type: object
       properties:
-        previous:
+        previousPage:
           type: string
-          example: 'https://ga4gh-example-service.com?before=dXNlcjpVMEc5V0ZYTlo'
-        next:
+          format: url
+          example: 'https://ga4gh-example-service.com?pageToken=dXNlcjpVMEc5V0ZYTlo'
+        nextPage:
           type: string
-          example: 'https://ga4gh-example-service.com?after=NDMyNzQyODI3OTQw'
-        cursors:
-          type: object
-          properties:
-            before:
-              type: string
-              example: 'dXNlcjpVMEc5V0ZYTlo'
-            after:
-              type: string
-              example: 'NDMyNzQyODI3OTQw'
+          format: url
+          example: 'https://ga4gh-example-service.com?pageToken=NDMyNzQyODI3OTQw'
     ServiceType:
       type: string
       description: Indicates the type of the service.
