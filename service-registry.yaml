@@ -17,7 +17,7 @@ paths:
         - name: authorization
           in: header
           description: The auth token
-          required: true
+          required: false
           schema:
             type: string
         - name: page
@@ -56,7 +56,7 @@ paths:
         - name: authorization
           in: header
           description: The auth token
-          required: true
+          required: false
           schema:
             type: string
       responses:
@@ -90,7 +90,7 @@ paths:
         - name: authorization
           in: header
           description: The auth token
-          required: true
+          required: false
           schema:
             type: string
       responses:
