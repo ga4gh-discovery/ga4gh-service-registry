@@ -20,9 +20,9 @@ paths:
           required: true
           schema:
             type: string
-        - name: pageToken
+        - name: page
           in: query
-          description: Page token.
+          description: Page token
           required: false
           schema:
             type: string
@@ -138,11 +138,11 @@ components:
         previousPage:
           type: string
           format: url
-          example: 'https://ga4gh-example-service.com?pageToken=dXNlcjpVMEc5V0ZYTlo'
+          example: 'https://ga4gh-example-service.com?page=dXNlcjpVMEc5V0ZYTlo'
         nextPage:
           type: string
           format: url
-          example: 'https://ga4gh-example-service.com?pageToken=NDMyNzQyODI3OTQw'
+          example: 'https://ga4gh-example-service.com?page=NDMyNzQyODI3OTQw'
     ServiceType:
       type: string
       description: Indicates the type of the service.
