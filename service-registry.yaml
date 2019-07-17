@@ -180,12 +180,6 @@ components:
           description: >-
             A set of key-value pairs that represent metadata specific to this
             service.
-        aliases:
-          type: array
-          items:
-            type: string
-          description: A list of strings that can be used to tag the service.
-          example: ["staging"]
     Error:
       type: object
       properties:
