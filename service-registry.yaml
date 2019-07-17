@@ -1,12 +1,14 @@
 openapi: 3.0.0
 info:
-  title: Discovery Service Registry
+  title: GA4GH Service Registry API Specification
   version: 1.0.0
-  termsOfService: TBD
+  description: 'More information on [GitHub](https://github.com/ga4gh-discovery/ga4gh-service-registry/).'
   license:
-    name: GA4GH Service Registry
+    name: Apache 2.0
+    url: 'https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-registry/develop/LICENSE'
   contact:
-    name: OICR
+    name: GA4GH Discovery Networks Team
+    email: ga4gh-discovery-networks@ga4gh.org
 paths:
   /services:
     get:
