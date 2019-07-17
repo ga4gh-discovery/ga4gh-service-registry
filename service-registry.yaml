@@ -137,11 +137,11 @@ components:
       properties:
         previousPage:
           type: string
-          format: url
+          format: uri
           example: 'https://ga4gh-example-service.com?page=dXNlcjpVMEc5V0ZYTlo'
         nextPage:
           type: string
-          format: url
+          format: uri
           example: 'https://ga4gh-example-service.com?page=NDMyNzQyODI3OTQw'
     ServiceType:
       type: string
