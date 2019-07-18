@@ -185,13 +185,9 @@ components:
         description:
           type: string
           description: A human readable general description of this service.
-        metadata:
+        extension:
           type: object
-          additionalProperties:
-            type: string
-          description: >-
-            A set of key-value pairs that represent metadata specific to this
-            service.
+          description: A sub-object used by implementing services to provide additional data about the service. Extensions are not compatible between implementations, but should be consistent between services sharing a single identifier.
     Error:
       type: object
       properties:
