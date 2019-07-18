@@ -68,7 +68,8 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ServiceType'
+                  type: string
+                  example: 'urn:ga4gh:beacon'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -145,10 +146,6 @@ components:
           type: string
           format: uri
           example: 'https://ga4gh-example-service.com?page=NDMyNzQyODI3OTQw'
-    ServiceType:
-      type: string
-      description: Indicates the type of the service.
-      example: 'BEACON'
     Service:
       type: object
       description: Web server as a service
@@ -167,7 +164,9 @@ components:
           description: URL of the service (RFC 3986 format).
           example: 'https://foobar.com'
         type:
-          $ref: '#/components/schemas/ServiceType'
+          type: string
+          description: Type of the service.
+          example: 'urn:ga4gh:beacon'
         createdAt:
           type: string
           format: date-time
