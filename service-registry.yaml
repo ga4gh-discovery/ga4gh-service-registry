@@ -161,12 +161,16 @@ components:
           example: 'GA4GH Service'
         url:
           type: string
-          description: URL of the service (RFC 3986 format).
+          description: URL of service (RFC 3986 format).
           example: 'https://foobar.com'
         type:
           type: string
-          description: Type of the service.
-          example: 'urn:ga4gh:beacon'
+          description: |
+            Type of service in URN format ('groupId:artifactId:version').
+            - groupId: Reversed domain name (e.g. org.ga4gh).
+            - artifactId: Name of the artifact or specification without version (e.g. beacon; drs).
+            - version: Version number (e.g. 1.0.1).
+          example: 'org.ga4gh:beacon:1.0.1'
         createdAt:
           type: string
           format: date-time
