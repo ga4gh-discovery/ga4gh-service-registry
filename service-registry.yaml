@@ -187,7 +187,7 @@ components:
           description: A human readable general description of this service.
         extension:
           type: object
-          description: A sub-object used by implementing services to provide additional data about the service. Extensions are not compatible between implementations, but should be consistent between services sharing a single identifier.
+          description: An additional arbitrary data about the service.
     Error:
       type: object
       properties:
