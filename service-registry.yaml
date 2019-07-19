@@ -9,6 +9,8 @@ info:
   contact:
     name: GA4GH Discovery Networks Team
     email: ga4gh-discovery-networks@ga4gh.org
+security:
+  - authToken: []
 paths:
   /services:
     get:
