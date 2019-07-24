@@ -57,7 +57,8 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ServiceType'
+                  type: string
+                  example: 'org.ga4gh:beacon:1.0.1'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -68,7 +69,7 @@ paths:
     get:
       tags:
         - services
-      summary: Get service specified by UUID
+      summary: Get service specified by identifier
       parameters:
         - name: serviceId
           in: path
@@ -76,7 +77,6 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
       responses:
         '200':
           description: Success
@@ -126,6 +126,17 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    Service:
+      allOf:
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-info/develop/service-info.yaml#/components/schemas/ServiceInfo'
+        - type: object
+          properties:
+            url:
+              type: string
+              format: url
+              example: 'https://ga4gh-example-service.com'
+          required:
+            - url
     Pagination:
       type: object
       properties:
@@ -137,53 +148,6 @@ components:
           type: string
           format: uri
           example: 'https://ga4gh-example-service.com?page=NDMyNzQyODI3OTQw'
-    ServiceType:
-      type: string
-      description: Indicates the type of the service.
-      example: 'BEACON'
-    Service:
-      type: object
-      description: Web server as a service
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: An identifier (UUID) unique to this service.
-          example: '8087d255-1e38-45b6-a5ba-31e2bb50bdd3'
-        name:
-          type: string
-          description: Name of service. It is recommended to be unique and unambiguous.
-          example: 'GA4GH Service'
-        url:
-          type: string
-          description: URL of the service (RFC 3986 format).
-          example: 'https://foobar.com'
-        type:
-          $ref: '#/components/schemas/ServiceType'
-        createdAt:
-          type: string
-          format: date-time
-          description: Timestamp of service creation in RFC 3339.
-          example: '2019-06-04T12:58:19Z'
-        updatedAt:
-          type: string
-          format: date-time
-          description: Timestamp of service modification in RFC 3339.
-          example: '2019-06-04T12:58:19Z'
-        contactUrl:
-          type: string
-          description: URL of the contact for the host/maintainer of this service, e.g. a link to a contact form (RFC 3986 format), or an email (RFC 2368 format).
-          example: 'mailto:support@example.com'
-        description:
-          type: string
-          description: A human readable general description of this service.
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-          description: >-
-            A set of key-value pairs that represent metadata specific to this
-            service.
     Error:
       type: object
       properties:
