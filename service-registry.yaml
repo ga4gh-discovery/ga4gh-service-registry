@@ -133,7 +133,7 @@ components:
           properties:
             url:
               type: string
-              format: url
+              format: uri
               example: 'https://ga4gh-example-service.com'
           required:
             - url
