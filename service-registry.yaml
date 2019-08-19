@@ -25,7 +25,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Service'
+                  $ref: '#/components/schemas/ExternalService'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -71,13 +71,23 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/ExternalService'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
         '500':
           $ref: '#/components/responses/ServerError'
+  /service-info:
+    get:
+      description: Get information about the registry service.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
 components:
   securitySchemes:
     authToken:
@@ -115,8 +125,11 @@ components:
             $ref: '#/components/schemas/Error'
   schemas:
     Service:
+      # TODO: Changed to a tag once ga4gh-service-info is released.
+      $ref: 'https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-info/develop/service-info.yaml#/components/schemas/ServiceInfo'
+    ExternalService:
       allOf:
-        - $ref: 'https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-info/develop/service-info.yaml#/components/schemas/ServiceInfo'
+        - $ref: '#/components/schemas/Service'
         - type: object
           properties:
             url:
