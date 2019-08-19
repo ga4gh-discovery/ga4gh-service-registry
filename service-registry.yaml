@@ -16,28 +16,16 @@ paths:
     get:
       tags:
         - services
-      summary: Get page of services
-      parameters:
-        - name: page
-          in: query
-          description: Page token
-          required: false
-          schema:
-            type: string
-            example: 'NDMyNzQyODI3OTQw'
+      summary: List services in the registry
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                properties:
-                  content:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Service'
-                  pagination:
-                    $ref: '#/components/schemas/Pagination'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -137,17 +125,6 @@ components:
               example: 'https://ga4gh-example-service.com'
           required:
             - url
-    Pagination:
-      type: object
-      properties:
-        previousPage:
-          type: string
-          format: uri
-          example: 'https://ga4gh-example-service.com?page=dXNlcjpVMEc5V0ZYTlo'
-        nextPage:
-          type: string
-          format: uri
-          example: 'https://ga4gh-example-service.com?page=NDMyNzQyODI3OTQw'
     Error:
       type: object
       properties:
