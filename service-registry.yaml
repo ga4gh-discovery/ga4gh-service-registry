@@ -26,8 +26,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ExternalService'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
         '500':
@@ -47,8 +45,6 @@ paths:
                 items:
                   type: string
                   example: 'org.ga4gh:beacon:1.0.1'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
         '500':
@@ -72,10 +68,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExternalService'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
   /service-info:
@@ -90,6 +86,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Service'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
 components:
   securitySchemes:
     authToken:
@@ -101,20 +101,14 @@ components:
       name: Authorization
       in: header
   responses:
-    NotFound:
-      description: 'Not found'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: 'Unauthorized'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Forbidden:
       description: 'Forbidden'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 'Service not found'
       content:
         application/json:
           schema:
@@ -146,11 +140,11 @@ components:
         code:
           type: integer
           description: 'HTTP status code (as per RFC 7231)'
-          example: '400'
+          example: '500'
         message:
           type: string
           description: 'Short description of the error'
-          example: 'Bad request'
+          example: 'Internal server error'
         timestamp:
           type: string
           format: date-time
@@ -165,8 +159,8 @@ components:
               code:
                 type: string
                 description: 'Error code'
-                example: 'IllegalArgumentException'
+                example: 'QueryTimeoutException'
               message:
                 type: string
                 description: 'Description of the error'
-                example: 'Argument x must be greater than zero'
+                example: 'Could not connect to the database'
