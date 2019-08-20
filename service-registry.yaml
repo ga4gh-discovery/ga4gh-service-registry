@@ -1,14 +1,14 @@
 openapi: 3.0.2
 info:
-  title: GA4GH Service Registry API Specification
+  title: 'GA4GH Service Registry API Specification'
   version: 1.0.0
   description: 'More information on [GitHub](https://github.com/ga4gh-discovery/ga4gh-service-registry/).'
   license:
-    name: Apache 2.0
+    name: 'Apache 2.0'
     url: 'https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-registry/develop/LICENSE'
   contact:
-    name: GA4GH Discovery Networks Team
-    email: ga4gh-discovery-networks@ga4gh.org
+    name: 'GA4GH Discovery Networks Team'
+    email: 'ga4gh-discovery-networks@ga4gh.org'
 security:
   - authToken: []
 paths:
@@ -16,10 +16,10 @@ paths:
     get:
       tags:
         - services
-      summary: List services in the registry
+      summary: 'List all services in the registry'
       responses:
         '200':
-          description: Success
+          description: 'List of services'
           content:
             application/json:
               schema:
@@ -31,15 +31,15 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
         '500':
-          $ref: '#/components/responses/ServerError'
+          $ref: '#/components/responses/InternalServerError'
   /services/types:
     get:
       tags:
         - services
-      summary: List known service types
+      summary: 'List all distinct types of services exposed in the registry'
       responses:
         '200':
-          description: Success
+          description: 'List of service types'
           content:
             application/json:
               schema:
@@ -52,22 +52,22 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
         '500':
-          $ref: '#/components/responses/ServerError'
-  '/services/{serviceId}':
+          $ref: '#/components/responses/InternalServerError'
+  /services/{serviceId}:
     get:
       tags:
         - services
-      summary: Get service specified by identifier
+      summary: 'Show information about a specific service'
       parameters:
         - name: serviceId
           in: path
-          description: Service identifier
+          description: 'ID of a service to retrieve'
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: Success
+          description: 'Information about a service with the given ID'
           content:
             application/json:
               schema:
@@ -77,13 +77,15 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
         '500':
-          $ref: '#/components/responses/ServerError'
+          $ref: '#/components/responses/InternalServerError'
   /service-info:
     get:
-      description: Get information about the registry service.
+      tags:
+        - service-info
+      description: 'Show information about the registry'
       responses:
         '200':
-          description: Success
+          description: 'Information about the registry'
           content:
             application/json:
               schema:
@@ -93,39 +95,39 @@ components:
     authToken:
       description: |
         A valid authorization token must be passed in the 'Authorization' header.
-        Example syntax for using 'Authorization' header :
+        Example syntax for using 'Authorization' header:
           Bearer: token_string
       type: apiKey
       name: Authorization
       in: header
   responses:
     NotFound:
-      description: Not found
+      description: 'Not found'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     Unauthorized:
-      description: Unauthorized
+      description: 'Unauthorized'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     Forbidden:
-      description: Forbidden
+      description: 'Forbidden'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    ServerError:
-      description: Server error
+    InternalServerError:
+      description: 'Server error'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
     Service:
-      # TODO: Changed to a tag once ga4gh-service-info is released.
+      # TODO: Changed to a tag once service-info is released.
       $ref: 'https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-info/develop/service-info.yaml#/components/schemas/ServiceInfo'
     ExternalService:
       allOf:
@@ -143,27 +145,28 @@ components:
       properties:
         code:
           type: integer
-          description: HTTP status code
+          description: 'HTTP status code (as per RFC 7231)'
           example: '400'
         message:
           type: string
-          description: Description of the error or information.
+          description: 'Short description of the error'
           example: 'Bad request'
         timestamp:
           type: string
           format: date-time
-          description: Timestamp of service modification in RFC 3339.
+          description: 'Timestamp describing when the error was thrown (as per RFC 3339)'
           example: '2019-06-04T12:58:19Z'
         errors:
           type: array
+          description: 'List of errors causing this response'
           items:
             type: object
             properties:
               code:
                 type: string
-                description: Code
+                description: 'Error code'
                 example: 'IllegalArgumentException'
               message:
                 type: string
-                description: Description of the error or information.
+                description: 'Description of the error'
                 example: 'Argument x must be greater than zero'
