@@ -168,6 +168,7 @@ components:
       properties:
         code:
           type: integer
+          format: int32
           description: 'HTTP status code (as per RFC 7231)'
           example: '500'
         message:
