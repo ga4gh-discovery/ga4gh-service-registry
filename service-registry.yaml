@@ -14,9 +14,10 @@ security:
 paths:
   /services:
     get:
+      summary: 'List all services in the registry'
+      operationId: getServices
       tags:
         - services
-      summary: 'List all services in the registry'
       responses:
         '200':
           description: 'List of services'
@@ -36,9 +37,10 @@ paths:
           $ref: '#/components/responses/Error'
   /services/types:
     get:
+      summary: 'List all distinct types of services exposed in the registry'
+      operationId: getServiceTypes
       tags:
         - services
-      summary: 'List all distinct types of services exposed in the registry'
       responses:
         '200':
           description: 'List of service types'
@@ -59,9 +61,10 @@ paths:
           $ref: '#/components/responses/Error'
   /services/{serviceId}:
     get:
+      summary: 'Show information about a specific service'
+      operationId: getServiceById
       tags:
         - services
-      summary: 'Show information about a specific service'
       parameters:
         - name: serviceId
           in: path
@@ -88,9 +91,10 @@ paths:
           $ref: '#/components/responses/Error'
   /service-info:
     get:
+      summary: 'Show information about the registry'
+      operationId: getServiceInfo
       tags:
         - service-info
-      description: 'Show information about the registry'
       responses:
         '200':
           description: 'Information about the registry'
