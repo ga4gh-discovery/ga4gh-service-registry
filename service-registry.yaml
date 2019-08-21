@@ -26,10 +26,14 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ExternalService'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/Error'
   /services/types:
     get:
       tags:
@@ -45,10 +49,14 @@ paths:
                 items:
                   type: string
                   example: 'org.ga4gh:beacon:1.0.1'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/Error'
   /services/{serviceId}:
     get:
       tags:
@@ -68,12 +76,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExternalService'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/Error'
   /service-info:
     get:
       tags:
@@ -86,10 +98,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Service'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/Error'
 components:
   securitySchemes:
     authToken:
@@ -101,29 +117,42 @@ components:
       name: Authorization
       in: header
   responses:
+    Unauthorized:
+      description: 'Unauthorized (RFC 7235)'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     Forbidden:
-      description: 'Forbidden'
+      description: 'Forbidden (RFC 7231)'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     NotFound:
-      description: 'Service not found'
+      description: 'Not found (RFC 7231)'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     InternalServerError:
-      description: 'Server error'
+      description: 'Internal server error (RFC 7231)'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Error:
+      description: 'Unexpected error (RFC 7231)'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
     Service:
-      # TODO: Changed to a tag once service-info is released.
+      # TODO: Change to a tag once service-info is released.
       $ref: 'https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-info/develop/service-info.yaml#/components/schemas/ServiceInfo'
     ExternalService:
+      description: 'Web service with a URL'
       allOf:
         - $ref: '#/components/schemas/Service'
         - type: object
@@ -131,7 +160,7 @@ components:
             url:
               type: string
               format: uri
-              example: 'https://ga4gh-example-service.com'
+              example: 'https://example.com'
           required:
             - url
     Error:
