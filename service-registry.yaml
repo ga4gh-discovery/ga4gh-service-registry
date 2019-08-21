@@ -156,7 +156,7 @@ components:
       # TODO: Change to a tag once service-info is released.
       $ref: 'https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-info/develop/service-info.yaml#/components/schemas/ServiceInfo'
     ExternalService:
-      description: 'Web service with a URL'
+      description: 'GA4GH service with a URL'
       allOf:
         - $ref: '#/components/schemas/Service'
         - type: object
@@ -173,7 +173,7 @@ components:
         code:
           type: integer
           format: int32
-          description: 'HTTP status code (as per RFC 7231)'
+          description: 'Code identifying the failure, e.g. an HTTP status code (as per RFC 7231)'
           example: '500'
         message:
           type: string
