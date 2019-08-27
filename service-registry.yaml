@@ -154,7 +154,7 @@ components:
   schemas:
     Service:
       # TODO: Change to a tag once service-info is released.
-      $ref: 'https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-info/develop/service-info.yaml#/components/schemas/ServiceInfo'
+      $ref: 'https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-info/develop/service-info.yaml#/components/schemas/Service'
     ExternalService:
       description: 'GA4GH service with a URL'
       allOf:
