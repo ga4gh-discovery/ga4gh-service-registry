@@ -10,13 +10,14 @@ info:
     name: 'GA4GH Discovery Networks Team'
     email: 'ga4gh-discovery-networks@ga4gh.org'
 security:
-  - authToken: []
+  - bearerAuth: []
 paths:
   /services:
     get:
+      summary: 'List services in the registry'
+      operationId: getServices
       tags:
         - services
-      summary: 'List all services in the registry'
       responses:
         '200':
           description: 'List of services'
@@ -26,34 +27,20 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ExternalService'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /services/types:
-    get:
-      tags:
-        - services
-      summary: 'List all distinct types of services exposed in the registry'
-      responses:
-        '200':
-          description: 'List of service types'
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-                  example: 'org.ga4gh:beacon:1.0.1'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/Error'
   /services/{serviceId}:
     get:
+      summary: 'Show information about a specific service'
+      operationId: getServiceById
       tags:
         - services
-      summary: 'Show information about a specific service'
       parameters:
         - name: serviceId
           in: path
@@ -68,62 +55,108 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExternalService'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /service-info:
+        default:
+          $ref: '#/components/responses/Error'
+  /services/types:
     get:
+      summary: 'List types of services exposed by the registry'
+      description: 'List all distinct values of the `type` field of exposed services (see `Service`).'
+      operationId: getServiceTypes
       tags:
-        - service-info
-      description: 'Show information about the registry'
+        - services
       responses:
         '200':
-          description: 'Information about the registry'
+          description: 'List of service types'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Service'
+                type: array
+                items:
+                  type: string
+                  example: 'org.ga4gh:beacon:1.0.1'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/Error'
+  /service-info:
+    get:
+      summary: 'Show information about the registry'
+      operationId: getServiceInfo
+      tags:
+        - service-info
+      responses:
+        '200':
+          description: |
+            Display service information about this service registry.
+
+            Use `type: org.ga4gh:service-registry:1.0.0` when implementing this specification directly.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/Error'
 components:
   securitySchemes:
-    authToken:
-      description: |
-        A valid authorization token must be passed in the 'Authorization' header.
-        Example syntax for using 'Authorization' header:
-          Bearer: token_string
-      type: apiKey
-      name: Authorization
-      in: header
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   responses:
+    Unauthorized:
+      description: 'Unauthorized (RFC 7235)'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     Forbidden:
-      description: 'Forbidden'
+      description: 'Forbidden (RFC 7231)'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     NotFound:
-      description: 'Service not found'
+      description: 'Not found (RFC 7231)'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     InternalServerError:
-      description: 'Server error'
+      description: 'Internal server error (RFC 7231)'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Error:
+      description: 'Unexpected error (RFC 7231)'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
     Service:
-      # TODO: Changed to a tag once service-info is released.
+      # TODO: Change to a tag once service-info is released.
       $ref: 'https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-info/develop/service-info.yaml#/components/schemas/ServiceInfo'
     ExternalService:
+      description: 'GA4GH service with a URL'
       allOf:
         - $ref: '#/components/schemas/Service'
         - type: object
@@ -131,7 +164,7 @@ components:
             url:
               type: string
               format: uri
-              example: 'https://ga4gh-example-service.com'
+              example: 'https://example.com'
           required:
             - url
     Error:
@@ -139,7 +172,8 @@ components:
       properties:
         code:
           type: integer
-          description: 'HTTP status code (as per RFC 7231)'
+          format: int32
+          description: 'Code identifying the failure, e.g. an HTTP status code (as per RFC 7231)'
           example: '500'
         message:
           type: string
