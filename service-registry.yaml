@@ -37,14 +37,14 @@ paths:
           $ref: '#/components/responses/Error'
   /services/{serviceId}:
     get:
-      summary: 'Show information about a specific service'
+      summary: 'Find service in the registry by ID'
       operationId: getServiceById
       tags:
         - services
       parameters:
         - name: serviceId
           in: path
-          description: 'ID of a service to retrieve'
+          description: 'ID of the service to find'
           required: true
           schema:
             type: string
