@@ -10,11 +10,13 @@ The specification is useful whenever you're dealing with technologies that handl
 
 Service registry API is specified in OpenAPI in [service-registry.yaml](./service-registry.yaml), which [you can view using Swagger Editor](https://editor.swagger.io/?url=https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-registry/develop/service-registry.yaml).
 
-## How to use and extend this specification
+## How to implement
 
 There are two ways to implement this specifications - directly (e.g. a registry of services hosted by an institution), or indirectly through an upstream specification (e.g. an implementation of the Beacon Network specification, which itself provides registry functionality by extending this specification).
 
-When implementing a registry directly, please use `org.ga4gh:service-registry:1.0.0` as your service `type` under `/service-info`. When implementing a registry indirectly, rely on the upstream specification for guidance on the service type to use. 
+When implementing a registry directly, please use `org.ga4gh:service-registry:1.0.0` as your service `type` under `/service-info`. When implementing a registry indirectly, rely on the upstream specification for guidance on the service type to use.
+
+Service registry is useful for discovering where other services live, even if their locations change over time. As such, we recommend you deploy your service registry implementation with a stable URL, and use it to anchor variable URLs of other services for your clients.
 
 Feel free to check out [our reference implementation](https://github.com/ga4gh-discovery/ga4gh-service-registry-impl).
 
