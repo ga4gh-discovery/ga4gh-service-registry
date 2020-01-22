@@ -10,13 +10,15 @@ The specification is useful whenever you're dealing with technologies that handl
 
 Service registry API is specified in OpenAPI in [service-registry.yaml](./service-registry.yaml), which [you can view using Swagger Editor](https://editor.swagger.io/?url=https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-registry/develop/service-registry.yaml).
 
-### How to use and extend this specification
+## How to implement
 
-There are two ways of implementing this specifications - directly (e.g. a registry of services hosted by an institution), or indirectly through an upstream specification (e.g. an implementation of the Beacon Network specification, which itself provides registry functionality by extending this specification).
+There are two ways to implement this specifications - directly (e.g. a registry of services hosted by an institution), or indirectly through an upstream specification (e.g. an implementation of the Beacon Network specification, which itself provides registry functionality by extending this specification).
 
-When implementing a registry directly, please use `org.ga4gh:service-registry:1.0.0` as your service `type` under `/service-info`. When implementing a registry indirectly, rely on the upstream specification for guidance on the service type to use. 
+When implementing a registry directly, please use `org.ga4gh:service-registry:1.0.0` as your service `type` under `/service-info`. When implementing a registry indirectly, rely on the upstream specification for guidance on the service type to use.
 
-As an example, feel free to check out the [our reference implementation](https://github.com/ga4gh-discovery/ga4gh-service-registry-impl).
+Service registry is useful for discovering where other services live, even if their locations change over time. As such, we recommend you deploy your service registry implementation with a stable URL, and use it to anchor variable URLs of other services for your clients.
+
+Feel free to check out [our reference implementation](https://github.com/ga4gh-discovery/ga4gh-service-registry-impl).
 
 ## Security
 
@@ -31,6 +33,12 @@ Authorization: Bearer [access_token]
 ```
 
 The policies and processes used to perform user authentication and authorization, and the means through which access tokens are issued, are beyond the scope of this API specification. GA4GH recommends the use of the [OpenID Connect](https://openid.net/connect/) and [OAuth 2.0 framework (RFC 6749)](https://tools.ietf.org/html/rfc6749) for authentication and authorization.
+
+## CORS
+
+Cross-origin resource sharing (CORS) is an essential technique used to overcome the same origin content policy seen in browsers. This policy restricts a webpage from making a request to another website and leaking potentially sensitive information. However the same origin policy is a barrier to using open APIs. GA4GH open API implementers should enable CORS to an acceptable level as defined by their internal policy. For any public API implementations should allow requests from any server.
+
+GA4GH published a [CORS best practices document](https://docs.google.com/document/d/1Ifiik9afTO-CEpWGKEZ5TlixQ6tiKcvug4XLd9GNcqo/edit?usp=sharing), which implementers should refer to for guidance when enabling CORS on public API instances.
 
 ## How to test
 
@@ -63,7 +71,7 @@ Yes, you're welcome to list arbitrary services in your registry. This specificat
 
 ### How do you model hierarchies and networks?
 
-While there's no inherent support for structure within a group of services exposed by the registry, a service registry can list other service registries amongst its services. It is then the responsibility of the client to crawl through the graph to discover all the services available in the network. Alternatively, ou can perform such crawling in your implementation of the service registry server. While this eases the burden on the client, it comes at the cost of losing the structure of the network, and maintaining the list of services in sync across registries.   
+While there's no inherent support for structure within a group of services exposed by the registry, a service registry can list other service registries amongst its services. It is then the responsibility of the client to crawl through the graph to discover all the services available in the network. Alternatively, you can perform such crawling in your implementation of the service registry server. While this eases the burden on the client, it comes at the cost of losing the structure of the network, and maintaining the list of services in sync across registries.   
 
 ## Contributors
 
