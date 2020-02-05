@@ -1,6 +1,6 @@
 ![](https://www.ga4gh.org/wp-content/themes/ga4gh-theme/gfx/GA-logo-horizontal-tag-RGB.svg)
 
-# Service Registry API [![Build Status](https://travis-ci.org/ga4gh-discovery/ga4gh-service-registry.svg?branch=develop)](https://travis-ci.org/ga4gh-discovery/ga4gh-service-registry) [![](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-registry/develop/LICENSE)
+# Service Registry API <a href="https://github.com/ga4gh-discovery/ga4gh-service-registry/blob/develop/service-registry.yaml"><img src="http://validator.swagger.io/validator?url=https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-registry/develop/service-registry.yaml" alt="Swagger Validator" height="20em" width="72em"></a> [![Build Status](https://travis-ci.org/ga4gh-discovery/ga4gh-service-registry.svg?branch=develop)](https://travis-ci.org/ga4gh-discovery/ga4gh-service-registry) [![](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-registry/develop/LICENSE)
 
 Service registry is a GA4GH service providing information about other GA4GH services, primarily for the purpose of organizing services into networks or groups and service discovery across organizational boundaries. Information about the individual services in the registry is described in a complementary [service-info](https://github.com/ga4gh-discovery/ga4gh-service-info) specification.
 
