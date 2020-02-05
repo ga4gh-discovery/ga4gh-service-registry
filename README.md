@@ -14,7 +14,19 @@ Service registry API is specified in OpenAPI in [service-registry.yaml](./servic
 
 There are two ways to implement this specifications - directly (e.g. a registry of services hosted by an institution), or indirectly through an upstream specification (e.g. an implementation of the Beacon Network specification, which itself provides registry functionality by extending this specification).
 
-When implementing a registry directly, please use `org.ga4gh:service-registry:1.0.0` as your service `type` under `/service-info`. When implementing a registry indirectly, rely on the upstream specification for guidance on the service type to use.
+When implementing a registry directly, please use the following as your service `type` under `/service-info`. 
+
+```yaml
+"type": {
+  "group": "org.ga4gh",
+  "artifact": "service-registry",
+  "version": "1.0.0"
+}
+```
+
+When implementing a registry indirectly, rely on the upstream specification for guidance on the service type to use.
+
+Sometimes, for example when implementing a specification extending this specification, you might want to include additional information not easily captured by fields currently specified in our schemas. In such situations, we recommend you [add custom fields directly as top-level fields](#implementation-decisions) in your schemas, [as recommended by service-info](https://github.com/ga4gh-discovery/ga4gh-service-info#extending-service-info-payloads).
 
 Service registry is useful for discovering where other services live, even if their locations change over time. As such, we recommend you deploy your service registry implementation with a stable URL, and use it to anchor variable URLs of other services for your clients.
 
@@ -56,6 +68,7 @@ Please send an email to security-notification@ga4gh.org.
 
 1. Don't prescribe pagination ([#71](https://github.com/ga4gh-discovery/ga4gh-service-registry/issues/71)).
 1. Don't compromise design in favour of static no-code implementation ([#71](https://github.com/ga4gh-discovery/ga4gh-service-registry/issues/71)).
+1. When extending the specification, add custom fields directly as top-level fields in your schemas - no need to nest in a particular field ([service-info/issues/35](https://github.com/ga4gh-discovery/ga4gh-service-info/issues/35#issuecomment-521665116)).
 
 ## FAQ
 
