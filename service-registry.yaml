@@ -2,7 +2,9 @@ openapi: 3.0.2
 info:
   title: 'GA4GH Service Registry API Specification'
   version: 1.0.0
-  description: 'More information on [GitHub](https://github.com/ga4gh-discovery/ga4gh-service-registry/).'
+  description: |
+    Service registry is a GA4GH service providing information about other GA4GH services, primarily for the purpose of organizing services into networks or groups and service discovery across organizational boundaries. Information about the individual services in the registry is described in a complementary [service-info](https://github.com/ga4gh-discovery/ga4gh-service-info) specification.
+    More information on [GitHub](https://github.com/ga4gh-discovery/ga4gh-service-registry/).
   license:
     name: 'Apache 2.0'
     url: 'https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-registry/develop/LICENSE'
