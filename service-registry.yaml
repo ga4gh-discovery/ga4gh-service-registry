@@ -1,10 +1,16 @@
 openapi: 3.0.2
 info:
   title: 'GA4GH Service Registry API Specification'
-  version: 1.0.0
+  version: 1.1.0
   description: |
     Service registry is a GA4GH service providing information about other GA4GH services, primarily for the purpose of organizing services into networks or groups and service discovery across organizational boundaries. Information about the individual services in the registry is described in a complementary [service-info](https://github.com/ga4gh-discovery/ga4gh-service-info) specification.
     More information on [GitHub](https://github.com/ga4gh-discovery/ga4gh-service-registry/).
+
+    ## Write endpoints
+
+    With the service registry version `1.0.0` release, additional endpoints have been added.
+    `POST`, `PUT`, and `DELETE` endpoints allows clients to add, modify, and delete services within the registry, respectively.
+    These endpoints are **OPTIONAL**, registries can leave them unimplemented and still remain conformant to the specification.
   license:
     name: 'Apache 2.0'
     url: 'https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-registry/develop/LICENSE'
