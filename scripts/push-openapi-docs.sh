@@ -78,7 +78,7 @@ function main {
         echo -e "cleaning up"
         cleanup_github_bot
     else
-        echo -e "travis branch: ${TRAVIS BRANCH}; not building documentation"
+        echo -e "travis branch: ${TRAVIS_BRANCH}; not building documentation"
     fi
 }
 
