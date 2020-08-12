@@ -1,11 +1,22 @@
+git:
+  depth: false
 language: java
 dist: bionic
 sudo: false
 jdk:
   - openjdk11
 env:
-  - GH_URL=https://raw.githubusercontent.com FILE_TO_VALIDATE=service-registry.yaml URL_TO_VALIDATE=$GH_URL/${TRAVIS_PULL_REQUEST_SLUG:-$TRAVIS_REPO_SLUG}/${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}/$FILE_TO_VALIDATE
+  global:
+    - GH_URL=https://raw.githubusercontent.com
+    - FILE_TO_VALIDATE=service-registry.yaml
+    - URL_TO_VALIDATE=$GH_URL/${TRAVIS_PULL_REQUEST_SLUG:-$TRAVIS_REPO_SLUG}/${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}/$FILE_TO_VALIDATE
+    - GH_PAGES_NAME='ga4gh-bot'
+    - GH_PAGES_EMAIL='ga4ghdev@gmail.com'
+    - secure: eLCsVSQgaq2yi/c2Wz5atKRenRwbVZhw9WpMH8F3vdGgcHFbw6uZ+UgERTI8mCkB+CmvnJ/2QOwidE4cIVYIvt1Z0wF4Gv71yVoV1P4FJPtbZKXqcOcn9BTvAjRkkvkfTFbs9eZuDjcNp7hwJBFcMy+ZBsBHERJC26klrhmpwP5kF0dccTNQQfd6wzRcBGMHxBW32P0ONWiRI0ROBnqt94UEcM5OD6cRXnZcev539JhTeSy1hKINHUj96m5vvG1wtD/Ti7MYY9jia3RLN+JOxTtCGJ4wbuFdWobpa+X3RAZn4WOIrFsyobcZXc9Kr/PAz39hoYqJuiS2HIzVxpnsw4kmkYubjSCKhXwe5IBtrhMOiuwzsyIpSYN1shDSZmpE6G3jptuEPtznNWyA1dGyWRHR2NZRFAm67SLLsN7mEfOwHQrbBUMMmetEF/aG5DeupIe9YHXmpE16ijfRx67ftYnDpkRtcJSToy+98qQFd1w3SfX++TtTX69+lBJKUHqzAdbAGqcWd0X7EB7NhMVIP4rjORczBz2OGqPwCmlC/eYS7Fw54F1WwshoBNufERpdSGPzsKKMNWy7UvQaTdXpN/HGJnX/xURKZeiJPoly6tTzZlCSbsBpUDWyKMkmtTqFsgQR/lZ+x/lHmcDMHy6p8k1gNY5zoZhZb71llPN+18I=
 before_install:
   - git clone --branch=v1.1.0 https://github.com/mcupak/oas-validator.git
 script:
   - ./oas-validator/validate.sh "$URL_TO_VALIDATE"
+after_success:
+  - chmod 755 ./scripts/push-openapi-docs.sh
+  - "./scripts/push-openapi-docs.sh"
