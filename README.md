@@ -8,7 +8,7 @@ The specification is useful whenever you're dealing with technologies that handl
 
 ## How to view
 
-Service registry API is specified in OpenAPI in [service-registry.yaml](./service-registry.yaml), which [you can view using Swagger Editor](https://editor.swagger.io/?url=https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-registry/develop/service-registry.yaml).
+Service registry API is specified with [OpenAPI](./openapi/openapi.yaml), which can be visualised in our [Redoc documentation](https://ga4gh-discovery.github.io/ga4gh-service-registry/docs/).
 
 ## How to implement
 
