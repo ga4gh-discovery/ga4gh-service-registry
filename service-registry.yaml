@@ -1,10 +1,16 @@
 openapi: 3.0.2
 info:
   title: 'GA4GH Service Registry API Specification'
-  version: 1.0.0
+  version: 1.1.0
   description: |
     Service registry is a GA4GH service providing information about other GA4GH services, primarily for the purpose of organizing services into networks or groups and service discovery across organizational boundaries. Information about the individual services in the registry is described in a complementary [service-info](https://github.com/ga4gh-discovery/ga4gh-service-info) specification.
     More information on [GitHub](https://github.com/ga4gh-discovery/ga4gh-service-registry/).
+
+    ## Write endpoints
+
+    With the service registry version `1.0.0` release, additional endpoints have been added.
+    `POST`, `PUT`, and `DELETE` endpoints allows clients to add, modify, and delete services within the registry, respectively.
+    These endpoints are **OPTIONAL**, registries can leave them unimplemented and still remain conformant to the specification.
   license:
     name: 'Apache 2.0'
     url: 'https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-registry/develop/LICENSE'
@@ -37,6 +43,30 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         default:
           $ref: '#/components/responses/Error'
+    post:
+      summary: Create new service in the registry
+      operationId: createService
+      tags:
+        - services
+      requestBody:
+        $ref: '#/components/requestBodies/Service'
+      responses:
+        200:
+          description: Created new service
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalService'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/Error'
   /services/{serviceId}:
     get:
       summary: 'Find service in the registry by ID'
@@ -44,12 +74,7 @@ paths:
       tags:
         - services
       parameters:
-        - name: serviceId
-          in: path
-          description: 'ID of the service to find'
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/ServiceId'
       responses:
         '200':
           description: 'Information about a service with the given ID'
@@ -64,6 +89,50 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
+          $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/Error'
+    put:
+      summary: Update the existing service with the given ID
+      operationId: updateServiceById
+      tags:
+        - services
+      parameters:
+        - $ref: '#/components/parameters/ServiceId'
+      requestBody:
+        $ref: '#/components/requestBodies/Service'
+      responses:
+        200:
+          description: Updated the service with new properties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalService'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/Error'
+    delete:
+      summary: Delete the service with the given ID
+      operationId: deleteServiceById
+      tags:
+        - services
+      parameters:
+        - $ref: '#/components/parameters/ServiceId'
+      responses:
+        200:
+          description: Service was deleted
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        500:
           $ref: '#/components/responses/InternalServerError'
         default:
           $ref: '#/components/responses/Error'
@@ -121,7 +190,29 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+  parameters:
+    ServiceId:
+      name: serviceId
+      in: path
+      description: 'ID of the service to find'
+      required: true
+      schema:
+        type: string
+  requestBodies:
+    Service:
+      description: Service to create or update
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExternalService'
   responses:
+    BadRequest:
+      description: 'Bad Request ([RFC 7231, section 6.5.1](https://tools.ietf.org/html/rfc7231#section-6.5.1))'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: 'Unauthorized ([RFC 7235](https://tools.ietf.org/html/rfc7235))'
       content:

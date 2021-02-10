@@ -76,7 +76,7 @@ Please send an email to security-notification@ga4gh.org.
 
 General-purpose service registries you might know from microservices (like [Eureka](https://github.com/Netflix/eureka) or [Consul](https://www.hashicorp.com/products/consul/service-discovery)) are designed to allow services to programmatically discover other services in their environment. They work within organizational boundaries and rely on the environment being under your control. They use custom proprietary APIs and are fairly heavy-weight (provide a lot of additional functionality like rich health checking, multi-datacenter awareness, service management).
 
-This service registry is a minimalistic, light-weight, read-only, standard API. It's designed to aggregate services from many organizations across organizational boundaries, without imposing communication restrictions on these services, or even requiring them to be aware of the registry they're a part of. Rather than internal service-service discovery, this registry is often used to advertise services to arbitrary clients outside of the service organization. The registry is GA4GH-aware and supports metadata specific to GA4GH web services.
+This service registry is a minimalistic, light-weight, standard API. It's designed to aggregate services from many organizations across organizational boundaries, without imposing communication restrictions on these services, or even requiring them to be aware of the registry they're a part of. Rather than internal service-service discovery, this registry is often used to advertise services to arbitrary clients outside of the service organization. The registry is GA4GH-aware and supports metadata specific to GA4GH web services.
 
 ### Does the registry support non-GA4GH services?
 
